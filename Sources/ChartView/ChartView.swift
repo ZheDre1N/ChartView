@@ -2,6 +2,9 @@ import UIKit
 
 public class ChartView: UIView {
   
+  //MARK: Dependencies
+  public var cvStyle = CVStyle()
+  
   //MARK: Interface
   public var dataSource: [CVCandle]? {
     didSet {
@@ -17,7 +20,7 @@ public class ChartView: UIView {
   
   public func startAnimating(withMockData isMocked: Bool) {}
   public func stopAnimating() {}
-    
+  
   //MARK: Declarations
   private var drawableDataSourceRange: ClosedRange<Int>?
   private var drawableDataPoints: [CGPoint]?
@@ -113,11 +116,7 @@ public class ChartView: UIView {
   //MARK: 1 Part
   private func drawTopBorder() { // 1 part
     addSubview(topBorder)
-    if #available(iOS 13.0, *) {
-      topBorder.backgroundColor = .secondaryLabel
-    } else {
-      // Fallback on earlier versions
-    }
+    topBorder.backgroundColor = cvStyle.borderColor
     topBorder.frame = CGRect(
       x: 0,
       y: 0,
@@ -202,11 +201,7 @@ public class ChartView: UIView {
         1.0
       )
       
-      if #available(iOS 13.0, *) {
-        textLabelLayer.foregroundColor = UIColor.secondaryLabel.cgColor
-      } else {
-        // Fallback on earlier versions
-      }
+      textLabelLayer.foregroundColor = cvStyle.labelColor
       textLabelLayer.contentsScale = UIScreen.main.scale
       textLabelLayer.font = textFont
       textLabelLayer.fontSize = textLabelLayerHeight
@@ -231,7 +226,7 @@ public class ChartView: UIView {
   
   private func drawGradientLayer() { // 2.1.3 part
     chartGradientLayer.frame = chartView.bounds
-    chartGradientLayer.colors = [UIColor.systemGreen.cgColor, UIColor.clear.cgColor]
+    chartGradientLayer.colors = cvStyle.gradients
     chartView.layer.addSublayer(chartGradientLayer)
   }
   
@@ -264,11 +259,7 @@ public class ChartView: UIView {
       width: frame.size.width - sectionBorderWidth - auxiliaryViewWidth,
       height: chartBorderHeight
     )
-    if #available(iOS 13.0, *) {
-      chartBorder.backgroundColor = .secondaryLabel
-    } else {
-      // Fallback on earlier versions
-    }
+    chartBorder.backgroundColor = cvStyle.borderColor
   }
   
   private func drawLabelsView() { // 2.3 part
@@ -297,11 +288,7 @@ public class ChartView: UIView {
         width: textLabelLayerWidth,
         height: 15
       )
-      if #available(iOS 13.0, *) {
-        textLabelLayer.foregroundColor = UIColor.secondaryLabel.cgColor
-      } else {
-        // Fallback on earlier versions
-      }
+      textLabelLayer.foregroundColor = cvStyle.labelColor
       textLabelLayer.contentsScale = UIScreen.main.scale
       textLabelLayer.font = textFont
       textLabelLayer.fontSize = 12
@@ -359,11 +346,7 @@ public class ChartView: UIView {
       width: frame.size.width,
       height: auxiliaryBorderHeight
     )
-    if #available(iOS 13.0, *) {
-      auxiliaryBorderView.backgroundColor = .secondaryLabel
-    } else {
-      // Fallback on earlier versions
-    }
+    auxiliaryBorderView.backgroundColor = cvStyle.borderColor
   }
   
   private func drawAuxiliaryButton() { // 3.3 part
@@ -383,11 +366,7 @@ public class ChartView: UIView {
       // Fallback on earlier versions
     }
     auxiliaryButton.setImage(image, for: .normal)
-    if #available(iOS 13.0, *) {
-      auxiliaryButton.tintColor = .secondaryLabel
-    } else {
-      // Fallback on earlier versions
-    }
+    auxiliaryButton.tintColor = cvStyle.fullButtonTintColor
     auxiliaryButton.addTarget(self, action: #selector(self.fullScreenButtonTapped), for: .touchUpInside)
   }
   
@@ -405,11 +384,7 @@ public class ChartView: UIView {
       width: sectionBorderWidth,
       height: frame.size.height - topBorderHeight
     )
-    if #available(iOS 13.0, *) {
-      sectionBorder.backgroundColor = .secondaryLabel
-    } else {
-      // Fallback on earlier versions
-    }
+    sectionBorder.backgroundColor = cvStyle.borderColor
   }
   
   //MARK: 5 Part
