@@ -21,8 +21,5 @@ let package = Package(
         .target(
             name: "ChartView",
             dependencies: []),
-        .testTarget(
-            name: "ChartViewTests",
-            dependencies: ["ChartView"]),
     ]
 )
